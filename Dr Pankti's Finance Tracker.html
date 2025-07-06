@@ -60,40 +60,79 @@
             width: 400px;
             text-align: center;
         }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 639px) { /* Tailwind's 'sm' breakpoint is 640px */
+            .tab-button {
+                padding-left: 0.75rem; /* px-3 */
+                padding-right: 0.75rem; /* px-3 */
+                font-size: 0.875rem; /* text-sm */
+            }
+            .grid.md\\:grid-cols-2 {
+                grid-template-columns: 1fr; /* Stack columns on small screens */
+            }
+            .grid.md\\:grid-cols-3 {
+                grid-template-columns: 1fr; /* Stack columns on small screens */
+            }
+            .grid.md\\:grid-cols-4 {
+                grid-template-columns: 1fr; /* Stack columns on small screens */
+            }
+            .text-xl {
+                font-size: 1.125rem; /* Slightly smaller for mobile titles */
+            }
+            .text-3xl {
+                font-size: 2rem; /* Slightly smaller for mobile main title */
+            }
+            .text-lg {
+                font-size: 1rem; /* Adjust for mobile paragraph */
+            }
+            .p-6 {
+                padding: 1.25rem; /* Reduce padding for smaller screens */
+            }
+            .sm\\:p-8 {
+                padding: 1.5rem; /* Adjust for sm breakpoint */
+            }
+            .sm\\:text-4xl {
+                font-size: 2.25rem; /* Keep 4xl for larger small screens */
+            }
+            .sm\\:w-1\\/2 {
+                width: 100%; /* Make buttons full width on small screens */
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-4 sm:p-6 bg-gray-100">
 
     <!-- Main Container -->
-    <div class="w-full max-w-4xl bg-white rounded-xl shadow-lg p-6 sm:p-8 space-y-8">
+    <div class="w-full max-w-4xl bg-white rounded-xl shadow-lg p-4 sm:p-8 space-y-6 sm:space-y-8">
 
         <!-- Header -->
-        <header class="text-center mb-6">
+        <header class="text-center mb-4 sm:mb-6">
             <h1 class="text-3xl sm:text-4xl font-bold text-gray-800">Dr. Pankti N. Surti</h1>
-            <p class="text-lg text-gray-600 mt-2">Finance Spending Tracker</p>
+            <p class="text-base sm:text-lg text-gray-600 mt-1 sm:mt-2">Finance Spending Tracker</p>
         </header>
 
         <!-- Transaction Input Form -->
-        <section class="bg-gray-50 p-6 rounded-lg shadow-inner space-y-4">
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">Add New Transaction</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <section class="bg-gray-50 p-4 sm:p-6 rounded-lg shadow-inner space-y-3 sm:space-y-4">
+            <h2 class="text-xl font-semibold text-gray-700 mb-3 sm:mb-4">Add New Transaction</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                 <div>
                     <label for="details" class="block text-sm font-medium text-gray-700 mb-1">Details</label>
                     <input type="text" id="details" placeholder="e.g., Medicine purchase, Patient consultation"
-                           class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200">
+                           class="w-full p-2 sm:p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200 text-sm">
                 </div>
                 <div>
                     <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">Amount (INR)</label>
                     <input type="number" id="amount" placeholder="e.g., 5000"
-                           class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200">
+                           class="w-full p-2 sm:p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200 text-sm">
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                 <div>
                     <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Type</label>
                     <select id="type"
-                            class="w-full p-3 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200">
+                            class="w-full p-2 sm:p-3 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200 text-sm">
                         <option value="expense">Expense</option>
                         <option value="income">Income</option>
                     </select>
@@ -101,7 +140,7 @@
                 <div>
                     <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
                     <select id="category"
-                            class="w-full p-3 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200">
+                            class="w-full p-2 sm:p-3 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200 text-sm">
                         <option value="homoeopathy">Homoeopathy Clinic</option>
                         <option value="cosmetology">Cosmetology Clinic</option>
                         <option value="personal">Personal</option>
@@ -110,158 +149,158 @@
                 </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row gap-4">
+            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <button id="saveTransactionBtn"
-                        class="w-full sm:w-1/2 bg-emerald-600 text-white p-3 rounded-md font-semibold text-lg hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300 transition duration-300 ease-in-out transform hover:scale-105">
+                        class="w-full sm:w-1/2 bg-emerald-600 text-white p-2 sm:p-3 rounded-md font-semibold text-base sm:text-lg hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300 transition duration-300 ease-in-out transform hover:scale-105">
                     Add Transaction
                 </button>
                 <button id="cancelEditBtn"
-                        class="w-full sm:w-1/2 bg-gray-400 text-white p-3 rounded-md font-semibold text-lg hover:bg-gray-500 focus:outline-none focus:ring-4 focus:ring-gray-300 transition duration-300 ease-in-out transform hover:scale-105 hidden">
+                        class="w-full sm:w-1/2 bg-gray-400 text-white p-2 sm:p-3 rounded-md font-semibold text-base sm:text-lg hover:bg-gray-500 focus:outline-none focus:ring-4 focus:ring-gray-300 transition duration-300 ease-in-out transform hover:scale-105 hidden">
                     Cancel Edit
                 </button>
             </div>
         </section>
 
         <!-- Tabs Navigation -->
-        <nav class="flex flex-wrap justify-center gap-2 sm:gap-4 bg-gray-50 p-3 rounded-lg shadow-inner">
-            <button class="tab-button active px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-emerald-100 transition duration-200" data-tab="all">All Transactions</button>
-            <button class="tab-button px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-emerald-100 transition duration-200" data-tab="homoeopathy">Homoeopathy Clinic</button>
-            <button class="tab-button px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-emerald-100 transition duration-200" data-tab="cosmetology">Cosmetology Clinic</button>
-            <button class="tab-button px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-emerald-100 transition duration-200" data-tab="personal">Personal</button>
-            <button class="tab-button px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-emerald-100 transition duration-200" data-tab="family">Family</button>
+        <nav class="flex flex-wrap justify-center gap-1 sm:gap-4 bg-gray-50 p-2 sm:p-3 rounded-lg shadow-inner">
+            <button class="tab-button active px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-medium text-gray-700 text-sm sm:text-base hover:bg-emerald-100 transition duration-200" data-tab="all">All Transactions</button>
+            <button class="tab-button px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-medium text-gray-700 text-sm sm:text-base hover:bg-emerald-100 transition duration-200" data-tab="homoeopathy">Homoeopathy Clinic</button>
+            <button class="tab-button px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-medium text-gray-700 text-sm sm:text-base hover:bg-emerald-100 transition duration-200" data-tab="cosmetology">Cosmetology Clinic</button>
+            <button class="tab-button px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-medium text-gray-700 text-sm sm:text-base hover:bg-emerald-100 transition duration-200" data-tab="personal">Personal</button>
+            <button class="tab-button px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-medium text-gray-700 text-sm sm:text-base hover:bg-emerald-100 transition duration-200" data-tab="family">Family</button>
         </nav>
 
         <!-- Tab Content Areas -->
-        <div id="tab-content" class="space-y-6">
+        <div id="tab-content" class="space-y-4 sm:space-y-6">
             <!-- All Transactions Tab Content -->
-            <div id="all" class="tab-pane active bg-gray-50 p-6 rounded-lg shadow-inner">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Overall Financial Summary</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-center">
-                    <div class="bg-blue-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Total Income (Adjusted)</p>
-                        <p id="overallIncome" class="text-xl font-semibold text-blue-700">INR 0.00</p>
+            <div id="all" class="tab-pane active bg-gray-50 p-4 sm:p-6 rounded-lg shadow-inner">
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">Overall Financial Summary</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6 text-center">
+                    <div class="bg-blue-50 p-3 sm:p-4 rounded-lg shadow-sm">
+                        <p class="text-xs sm:text-sm text-gray-600">Total Income (Adjusted)</p>
+                        <p id="overallIncome" class="text-lg sm:text-xl font-semibold text-blue-700">INR 0.00</p>
                     </div>
-                    <div class="bg-red-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Total Expense (Adjusted)</p>
-                        <p id="overallExpense" class="text-xl font-semibold text-red-700">INR 0.00</p>
+                    <div class="bg-red-50 p-3 sm:p-4 rounded-lg shadow-sm">
+                        <p class="text-xs sm:text-sm text-gray-600">Total Expense (Adjusted)</p>
+                        <p id="overallExpense" class="text-lg sm:text-xl font-semibold text-red-700">INR 0.00</p>
                     </div>
-                    <div class="bg-green-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Overall Net Balance</p>
-                        <p id="overallDifference" class="text-xl font-semibold text-gray-800">INR 0.00</p>
+                    <div class="bg-green-50 p-3 sm:p-4 rounded-lg shadow-sm">
+                        <p class="text-xs sm:text-sm text-gray-600">Overall Net Balance</p>
+                        <p id="overallDifference" class="text-lg sm:text-xl font-semibold text-gray-800">INR 0.00</p>
                     </div>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-700 mb-3">All Transactions</h3>
-                <div id="allTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-3 bg-white">
-                    <p class="text-gray-500 text-center">No transactions yet.</p>
+                <h3 class="text-lg sm:text-xl font-semibold text-gray-700 mb-2 sm:mb-3">All Transactions</h3>
+                <div id="allTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-2 sm:p-3 bg-white">
+                    <p class="text-gray-500 text-center text-sm py-4">No transactions yet.</p>
                 </div>
             </div>
 
             <!-- Homoeopathy Clinic Tab Content -->
-            <div id="homoeopathy" class="tab-pane hidden bg-gray-50 p-6 rounded-lg shadow-inner">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Homoeopathy Clinic Overview</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-center">
-                    <div class="bg-blue-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Total Income</p>
-                        <p id="homoeopathyIncome" class="text-xl font-semibold text-blue-700">INR 0.00</p>
+            <div id="homoeopathy" class="tab-pane hidden bg-gray-50 p-4 sm:p-6 rounded-lg shadow-inner">
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">Homoeopathy Clinic Overview</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6 text-center">
+                    <div class="bg-blue-50 p-3 sm:p-4 rounded-lg shadow-sm">
+                        <p class="text-xs sm:text-sm text-gray-600">Total Income</p>
+                        <p id="homoeopathyIncome" class="text-lg sm:text-xl font-semibold text-blue-700">INR 0.00</p>
                     </div>
-                    <div class="bg-red-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Total Expense</p>
-                        <p id="homoeopathyExpense" class="text-xl font-semibold text-red-700">INR 0.00</p>
+                    <div class="bg-red-50 p-3 sm:p-4 rounded-lg shadow-sm">
+                        <p class="text-xs sm:text-sm text-gray-600">Total Expense</p>
+                        <p id="homoeopathyExpense" class="text-lg sm:text-xl font-semibold text-red-700">INR 0.00</p>
                     </div>
-                    <div class="bg-green-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Difference</p>
-                        <p id="homoeopathyDifference" class="text-xl font-semibold text-gray-800">INR 0.00</p>
+                    <div class="bg-green-50 p-3 sm:p-4 rounded-lg shadow-sm">
+                        <p class="text-xs sm:text-sm text-gray-600">Difference</p>
+                        <p id="homoeopathyDifference" class="text-lg sm:text-xl font-semibold text-gray-800">INR 0.00</p>
                     </div>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-700 mb-3">Transactions</h3>
-                <div id="homoeopathyTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-3 bg-white">
-                    <p class="text-gray-500 text-center">No transactions yet.</p>
+                <h3 class="text-lg sm:text-xl font-semibold text-gray-700 mb-2 sm:mb-3">Transactions</h3>
+                <div id="homoeopathyTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-2 sm:p-3 bg-white">
+                    <p class="text-gray-500 text-center text-sm py-4">No transactions yet.</p>
                 </div>
             </div>
 
             <!-- Cosmetology Clinic Tab Content -->
-            <div id="cosmetology" class="tab-pane hidden bg-gray-50 p-6 rounded-lg shadow-inner">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Cosmetology Clinic Overview</h2>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 text-center">
-                    <div class="bg-blue-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Total Income</p>
-                        <p id="cosmetologyIncome" class="text-xl font-semibold text-blue-700">INR 0.00</p>
+            <div id="cosmetology" class="tab-pane hidden bg-gray-50 p-4 sm:p-6 rounded-lg shadow-inner">
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">Cosmetology Clinic Overview</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6 text-center">
+                    <div class="bg-blue-50 p-3 sm:p-4 rounded-lg shadow-sm">
+                        <p class="text-xs sm:text-sm text-gray-600">Total Income</p>
+                        <p id="cosmetologyIncome" class="text-lg sm:text-xl font-semibold text-blue-700">INR 0.00</p>
                     </div>
                     <!-- Expense section, conditionally displayed by JS -->
-                    <div id="cosmetologyExpenseSection" class="bg-red-50 p-4 rounded-lg shadow-sm hidden">
-                        <p class="text-sm text-gray-600">Total Expense</p>
-                        <p id="cosmetologyExpense" class="text-xl font-semibold text-red-700">INR 0.00</p>
+                    <div id="cosmetologyExpenseSection" class="bg-red-50 p-3 sm:p-4 rounded-lg shadow-sm hidden">
+                        <p class="text-xs sm:text-sm text-gray-600">Total Expense</p>
+                        <p id="cosmetologyExpense" class="text-lg sm:text-xl font-semibold text-red-700">INR 0.00</p>
                     </div>
-                    <div class="bg-purple-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Dr. Pankti's Share</p>
-                        <p id="panktiShare" class="text-xl font-semibold text-purple-700">INR 0.00</p>
+                    <div class="bg-purple-50 p-3 sm:p-4 rounded-lg shadow-sm">
+                        <p class="text-xs sm:text-sm text-gray-600">Dr. Pankti's Share</p>
+                        <p id="panktiShare" class="text-lg sm:text-xl font-semibold text-purple-700">INR 0.00</p>
                     </div>
-                    <div class="bg-orange-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Dr. Jenish's Share</p>
-                        <p id="jenishShare" class="text-xl font-semibold text-orange-700">INR 0.00</p>
+                    <div class="bg-orange-50 p-3 sm:p-4 rounded-lg shadow-sm">
+                        <p class="text-xs sm:text-sm text-gray-600">Dr. Jenish's Share</p>
+                        <p id="jenishShare" class="text-lg sm:text-xl font-semibold text-orange-700">INR 0.00</p>
                     </div>
-                    <div class="bg-green-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Net Income (Pankti)</p>
-                        <p id="cosmetologyNetIncome" class="text-xl font-semibold text-green-700">INR 0.00</p>
+                    <div class="bg-green-50 p-3 sm:p-4 rounded-lg shadow-sm">
+                        <p class="text-xs sm:text-sm text-gray-600">Net Income (Pankti)</p>
+                        <p id="cosmetologyNetIncome" class="text-lg sm:text-xl font-semibold text-green-700">INR 0.00</p>
                     </div>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-700 mb-3">Transactions</h3>
-                <div id="cosmetologyTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-3 bg-white">
-                    <p class="text-gray-500 text-center">No transactions yet.</p>
+                <h3 class="text-lg sm:text-xl font-semibold text-gray-700 mb-2 sm:mb-3">Transactions</h3>
+                <div id="cosmetologyTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-2 sm:p-3 bg-white">
+                    <p class="text-gray-500 text-center text-sm py-4">No transactions yet.</p>
                 </div>
             </div>
 
             <!-- Personal Tab Content -->
-            <div id="personal" class="tab-pane hidden bg-gray-50 p-6 rounded-lg shadow-inner">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Personal Overview</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-center">
-                    <div class="bg-blue-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Total Income</p>
-                        <p id="personalIncome" class="text-xl font-semibold text-blue-700">INR 0.00</p>
+            <div id="personal" class="tab-pane hidden bg-gray-50 p-4 sm:p-6 rounded-lg shadow-inner">
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">Personal Overview</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6 text-center">
+                    <div class="bg-blue-50 p-3 sm:p-4 rounded-lg shadow-sm">
+                        <p class="text-xs sm:text-sm text-gray-600">Total Income</p>
+                        <p id="personalIncome" class="text-lg sm:text-xl font-semibold text-blue-700">INR 0.00</p>
                     </div>
-                    <div class="bg-red-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Total Expense</p>
-                        <p id="personalExpense" class="text-xl font-semibold text-red-700">INR 0.00</p>
+                    <div class="bg-red-50 p-3 sm:p-4 rounded-lg shadow-sm">
+                        <p class="text-xs sm:text-sm text-gray-600">Total Expense</p>
+                        <p id="personalExpense" class="text-lg sm:text-xl font-semibold text-red-700">INR 0.00</p>
                     </div>
-                    <div class="bg-green-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Difference</p>
-                        <p id="personalDifference" class="text-xl font-semibold text-gray-800">INR 0.00</p>
+                    <div class="bg-green-50 p-3 sm:p-4 rounded-lg shadow-sm">
+                        <p class="text-xs sm:text-sm text-gray-600">Difference</p>
+                        <p id="personalDifference" class="text-lg sm:text-xl font-semibold text-gray-800">INR 0.00</p>
                     </div>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-700 mb-3">Transactions</h3>
-                <div id="personalTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-3 bg-white">
-                    <p class="text-gray-500 text-center">No transactions yet.</p>
+                <h3 class="text-lg sm:text-xl font-semibold text-gray-700 mb-2 sm:mb-3">Transactions</h3>
+                <div id="personalTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-2 sm:p-3 bg-white">
+                    <p class="text-gray-500 text-center text-sm py-4">No transactions yet.</p>
                 </div>
             </div>
 
             <!-- Family Tab Content -->
-            <div id="family" class="tab-pane hidden bg-gray-50 p-6 rounded-lg shadow-inner">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Family Overview</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-center">
-                    <div class="bg-blue-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Total Income</p>
-                        <p id="familyIncome" class="text-xl font-semibold text-blue-700">INR 0.00</p>
+            <div id="family" class="tab-pane hidden bg-gray-50 p-4 sm:p-6 rounded-lg shadow-inner">
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">Family Overview</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6 text-center">
+                    <div class="bg-blue-50 p-3 sm:p-4 rounded-lg shadow-sm">
+                        <p class="text-xs sm:text-sm text-gray-600">Total Income</p>
+                        <p id="familyIncome" class="text-lg sm:text-xl font-semibold text-blue-700">INR 0.00</p>
                     </div>
-                    <div class="bg-red-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Total Expense</p>
-                        <p id="familyExpense" class="text-xl font-semibold text-red-700">INR 0.00</p>
+                    <div class="bg-red-50 p-3 sm:p-4 rounded-lg shadow-sm">
+                        <p class="text-xs sm:text-sm text-gray-600">Total Expense</p>
+                        <p id="familyExpense" class="text-lg sm:text-xl font-semibold text-red-700">INR 0.00</p>
                     </div>
-                    <div class="bg-green-50 p-4 rounded-lg shadow-sm">
-                        <p class="text-sm text-gray-600">Difference</p>
-                        <p id="familyDifference" class="text-xl font-semibold text-gray-800">INR 0.00</p>
+                    <div class="bg-green-50 p-3 sm:p-4 rounded-lg shadow-sm">
+                        <p class="text-xs sm:text-sm text-gray-600">Difference</p>
+                        <p id="familyDifference" class="text-lg sm:text-xl font-semibold text-gray-800">INR 0.00</p>
                     </div>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-700 mb-3">Transactions</h3>
-                <div id="familyTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-3 bg-white">
-                    <p class="text-gray-500 text-center">No transactions yet.</p>
+                <h3 class="text-lg sm:text-xl font-semibold text-gray-700 mb-2 sm:mb-3">Transactions</h3>
+                <div id="familyTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-2 sm:p-3 bg-white">
+                    <p class="text-gray-500 text-center text-sm py-4">No transactions yet.</p>
                 </div>
             </div>
         </div>
 
         <!-- Download CSV Button -->
-        <section class="text-center mt-8">
+        <section class="text-center mt-6 sm:mt-8">
             <button id="downloadCsvBtn"
-                    class="bg-gray-700 text-white p-3 rounded-md font-semibold text-lg hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 transition duration-300 ease-in-out transform hover:scale-105">
+                    class="bg-gray-700 text-white p-2 sm:p-3 rounded-md font-semibold text-base sm:text-lg hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 transition duration-300 ease-in-out transform hover:scale-105">
                 Download All Data (CSV)
             </button>
         </section>
@@ -271,10 +310,10 @@
     <!-- Custom Modal Structure -->
     <div id="customModal" class="modal-overlay hidden">
         <div class="modal-content">
-            <p id="modalMessage" class="text-lg text-gray-800 mb-6"></p>
-            <div id="modalButtons" class="flex justify-center gap-4">
-                <button id="modalConfirmBtn" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-200 hidden">Confirm</button>
-                <button id="modalCancelBtn" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 transition duration-200">OK</button>
+            <p id="modalMessage" class="text-base sm:text-lg text-gray-800 mb-4 sm:mb-6"></p>
+            <div id="modalButtons" class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+                <button id="modalConfirmBtn" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-200 hidden text-sm sm:text-base">Confirm</button>
+                <button id="modalCancelBtn" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 transition duration-200 text-sm sm:text-base">OK</button>
             </div>
         </div>
     </div>
@@ -550,7 +589,7 @@
             containerElement.innerHTML = ''; // Clear previous list
 
             if (transactions.length === 0) {
-                containerElement.innerHTML = '<p class="text-gray-500 text-center py-4">No transactions yet.</p>';
+                containerElement.innerHTML = '<p class="text-gray-500 text-center text-sm py-4">No transactions yet.</p>';
                 return;
             }
 
