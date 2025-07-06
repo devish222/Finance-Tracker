@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Pankti N. Surti - Finance Tracker</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+        .tab-button.active {
+            background-color: #10B981; /* Emerald 500 */
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .positive-balance {
+            color: #10B981; /* Emerald 500 */
+        }
+        .negative-balance {
+            color: #EF4444; /* Red 500 */
+        }
+        /* Custom scrollbar for transaction lists */
+        .transaction-list-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .transaction-list-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .transaction-list-container::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        .transaction-list-container::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4 sm:p-6 bg-gray-100">
+
+    <!-- Main Container -->
+    <div class="w-full max-w-4xl bg-white rounded-xl shadow-lg p-6 sm:p-8 space-y-8">
+
+        <!-- Header -->
+        <header class="text-center mb-6">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800">Dr. Pankti N. Surti</h1>
+            <p class="text-lg text-gray-600 mt-2">Finance Spending Tracker</p>
+        </header>
+
+        <!-- Transaction Input Form -->
+        <section class="bg-gray-50 p-6 rounded-lg shadow-inner space-y-4">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Add New Transaction</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="details" class="block text-sm font-medium text-gray-700 mb-1">Details</label>
+                    <input type="text" id="details" placeholder="e.g., Medicine purchase, Patient consultation"
+                           class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200">
+                </div>
+                <div>
+                    <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">Amount (INR)</label>
+                    <input type="number" id="amount" placeholder="e.g., 5000"
+                           class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                    <select id="type"
+                            class="w-full p-3 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200">
+                        <option value="expense">Expense</option>
+                        <option value="income">Income</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <select id="category"
+                            class="w-full p-3 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition duration-200">
+                        <option value="homoeopathy">Homoeopathy Clinic</option>
+                        <option value="cosmetology">Cosmetology Clinic</option>
+                        <option value="personal">Personal</option>
+                        <option value="family">Family</option>
+                    </select>
+                </div>
+            </div>
+
+            <button id="addTransactionBtn"
+                    class="w-full bg-emerald-600 text-white p-3 rounded-md font-semibold text-lg hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300 transition duration-300 ease-in-out transform hover:scale-105">
+                Add Transaction
+            </button>
+        </section>
+
+        <!-- Tabs Navigation -->
+        <nav class="flex flex-wrap justify-center gap-2 sm:gap-4 bg-gray-50 p-3 rounded-lg shadow-inner">
+            <button class="tab-button active px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-emerald-100 transition duration-200" data-tab="all">All Transactions</button>
+            <button class="tab-button px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-emerald-100 transition duration-200" data-tab="homoeopathy">Homoeopathy Clinic</button>
+            <button class="tab-button px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-emerald-100 transition duration-200" data-tab="cosmetology">Cosmetology Clinic</button>
+            <button class="tab-button px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-emerald-100 transition duration-200" data-tab="personal">Personal</button>
+            <button class="tab-button px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-emerald-100 transition duration-200" data-tab="family">Family</button>
+        </nav>
+
+        <!-- Tab Content Areas -->
+        <div id="tab-content" class="space-y-6">
+            <!-- All Transactions Tab Content -->
+            <div id="all" class="tab-pane active bg-gray-50 p-6 rounded-lg shadow-inner">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Overall Financial Summary</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-center">
+                    <div class="bg-blue-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">Total Income (Adjusted)</p>
+                        <p id="overallIncome" class="text-xl font-semibold text-blue-700">INR 0.00</p>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">Total Expense (Adjusted)</p>
+                        <p id="overallExpense" class="text-xl font-semibold text-red-700">INR 0.00</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">Overall Net Balance</p>
+                        <p id="overallDifference" class="text-xl font-semibold text-gray-800">INR 0.00</p>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-700 mb-3">All Transactions</h3>
+                <div id="allTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-3 bg-white">
+                    <p class="text-gray-500 text-center">No transactions yet.</p>
+                </div>
+            </div>
+
+            <!-- Homoeopathy Clinic Tab Content -->
+            <div id="homoeopathy" class="tab-pane hidden bg-gray-50 p-6 rounded-lg shadow-inner">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Homoeopathy Clinic Overview</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-center">
+                    <div class="bg-blue-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">Total Income</p>
+                        <p id="homoeopathyIncome" class="text-xl font-semibold text-blue-700">INR 0.00</p>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">Total Expense</p>
+                        <p id="homoeopathyExpense" class="text-xl font-semibold text-red-700">INR 0.00</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">Difference</p>
+                        <p id="homoeopathyDifference" class="text-xl font-semibold text-gray-800">INR 0.00</p>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-700 mb-3">Transactions</h3>
+                <div id="homoeopathyTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-3 bg-white">
+                    <p class="text-gray-500 text-center">No transactions yet.</p>
+                </div>
+            </div>
+
+            <!-- Cosmetology Clinic Tab Content -->
+            <div id="cosmetology" class="tab-pane hidden bg-gray-50 p-6 rounded-lg shadow-inner">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Cosmetology Clinic Overview</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 text-center">
+                    <div class="bg-blue-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">Total Income</p>
+                        <p id="cosmetologyIncome" class="text-xl font-semibold text-blue-700">INR 0.00</p>
+                    </div>
+                    <!-- Expense section, conditionally displayed by JS -->
+                    <div id="cosmetologyExpenseSection" class="bg-red-50 p-4 rounded-lg shadow-sm hidden">
+                        <p class="text-sm text-gray-600">Total Expense</p>
+                        <p id="cosmetologyExpense" class="text-xl font-semibold text-red-700">INR 0.00</p>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">Dr. Pankti's Share</p>
+                        <p id="panktiShare" class="text-xl font-semibold text-purple-700">INR 0.00</p>
+                    </div>
+                    <div class="bg-orange-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">Dr. Jenish's Share</p>
+                        <p id="jenishShare" class="text-xl font-semibold text-orange-700">INR 0.00</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">Net Income (Pankti)</p>
+                        <p id="cosmetologyNetIncome" class="text-xl font-semibold text-green-700">INR 0.00</p>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-700 mb-3">Transactions</h3>
+                <div id="cosmetologyTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-3 bg-white">
+                    <p class="text-gray-500 text-center">No transactions yet.</p>
+                </div>
+            </div>
+
+            <!-- Personal Tab Content -->
+            <div id="personal" class="tab-pane hidden bg-gray-50 p-6 rounded-lg shadow-inner">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Personal Overview</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-center">
+                    <div class="bg-blue-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">Total Income</p>
+                        <p id="personalIncome" class="text-xl font-semibold text-blue-700">INR 0.00</p>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">Total Expense</p>
+                        <p id="personalExpense" class="text-xl font-semibold text-red-700">INR 0.00</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">Difference</p>
+                        <p id="personalDifference" class="text-xl font-semibold text-gray-800">INR 0.00</p>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-700 mb-3">Transactions</h3>
+                <div id="personalTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-3 bg-white">
+                    <p class="text-gray-500 text-center">No transactions yet.</p>
+                </div>
+            </div>
+
+            <!-- Family Tab Content -->
+            <div id="family" class="tab-pane hidden bg-gray-50 p-6 rounded-lg shadow-inner">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Family Overview</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-center">
+                    <div class="bg-blue-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">Total Income</p>
+                        <p id="familyIncome" class="text-xl font-semibold text-blue-700">INR 0.00</p>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">Total Expense</p>
+                        <p id="familyExpense" class="text-xl font-semibold text-red-700">INR 0.00</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-600">Difference</p>
+                        <p id="familyDifference" class="text-xl font-semibold text-gray-800">INR 0.00</p>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-700 mb-3">Transactions</h3>
+                <div id="familyTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-3 bg-white">
+                    <p class="text-gray-500 text-center">No transactions yet.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Download CSV Button -->
+        <section class="text-center mt-8">
+            <button id="downloadCsvBtn"
+                    class="bg-gray-700 text-white p-3 rounded-md font-semibold text-lg hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 transition duration-300 ease-in-out transform hover:scale-105">
+                Download All Data (CSV)
+            </button>
+        </section>
+
+    </div>
+
+    <script>
+        // Array to store all transactions
+        let transactions = [];
+
+        // DOM Elements
+        const detailsInput = document.getElementById('details');
+        const amountInput = document.getElementById('amount');
+        const typeSelect = document.getElementById('type');
+        const categorySelect = document.getElementById('category');
+        const addTransactionBtn = document.getElementById('addTransactionBtn');
+        const downloadCsvBtn = document.getElementById('downloadCsvBtn');
+
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+
+        // Function to format currency to INR
+        function formatCurrency(amount) {
+            return `INR ${amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        }
+
+        // Function to load transactions from localStorage
+        function loadTransactions() {
+            const storedTransactions = localStorage.getItem('financeTrackerTransactions');
+            if (storedTransactions) {
+                transactions = JSON.parse(storedTransactions);
+            }
+        }
+
+        // Function to save transactions to localStorage
+        function saveTransactions() {
+            localStorage.setItem('financeTrackerTransactions', JSON.stringify(transactions));
+        }
+
+        // Function to add a new transaction
+        function addTransaction() {
+            const details = detailsInput.value.trim();
+            const amount = parseFloat(amountInput.value);
+            const type = typeSelect.value;
+            const category = categorySelect.value;
+            const timestamp = new Date().toISOString(); // ISO string for consistent date/time
+
+            // Basic validation
+            if (!details || isNaN(amount) || amount <= 0) {
+                alert('Please enter valid details and a positive amount.');
+                return;
+            }
+
+            const newTransaction = {
+                details,
+                amount,
+                type,
+                category,
+                timestamp
+            };
+
+            transactions.push(newTransaction);
+            saveTransactions(); // Save to localStorage
+            renderDashboard(); // Update the dashboard UI
+
+            // Clear input fields
+            detailsInput.value = '';
+            amountInput.value = '';
+            typeSelect.value = 'expense'; // Reset to default
+            categorySelect.value = 'homoeopathy'; // Reset to default
+        }
+
+        // Function to render the dashboard based on current transactions
+        function renderDashboard() {
+            // Initialize sums for each category
+            const categoryData = {
+                homoeopathy: { income: 0, expense: 0, transactions: [] },
+                cosmetology: { income: 0, expense: 0, transactions: [] },
+                personal: { income: 0, expense: 0, transactions: [] },
+                family: { income: 0, expense: 0, transactions: [] }
+            };
+
+            // Aggregate data for individual categories first
+            transactions.forEach(t => {
+                if (categoryData[t.category]) {
+                    if (t.type === 'income') {
+                        categoryData[t.category].income += t.amount;
+                    } else {
+                        categoryData[t.category].expense += t.amount;
+                    }
+                    categoryData[t.category].transactions.push(t);
+                }
+            });
+
+            let overallIncome = 0;
+            let overallExpense = 0;
+
+            // Calculate overall income and expense considering Cosmetology net income
+            for (const cat in categoryData) {
+                if (cat === 'cosmetology') {
+                    const cosmetologyIncome = categoryData.cosmetology.income;
+                    const cosmetologyExpense = categoryData.cosmetology.expense;
+                    const panktiShare = cosmetologyIncome * 0.50;
+                    const cosmetologyNetIncome = panktiShare - cosmetologyExpense;
+
+                    if (cosmetologyNetIncome > 0) {
+                        overallIncome += cosmetologyNetIncome;
+                    } else {
+                        overallExpense += Math.abs(cosmetologyNetIncome);
+                    }
+                } else {
+                    overallIncome += categoryData[cat].income;
+                    overallExpense += categoryData[cat].expense;
+                }
+            }
+
+            // Render Overall Summary
+            const overallDifference = overallIncome - overallExpense;
+            document.getElementById('overallIncome').textContent = formatCurrency(overallIncome);
+            document.getElementById('overallExpense').textContent = formatCurrency(overallExpense);
+            const overallDiffElement = document.getElementById('overallDifference');
+            overallDiffElement.textContent = formatCurrency(overallDifference);
+            overallDiffElement.classList.remove('positive-balance', 'negative-balance');
+            if (overallDifference > 0) {
+                overallDiffElement.classList.add('positive-balance');
+            } else if (overallDifference < 0) {
+                overallDiffElement.classList.add('negative-balance');
+            }
+            renderTransactionList(transactions, document.getElementById('allTransactions')); // Display all transactions
+
+            // Render Homoeopathy, Personal, Family tabs
+            ['homoeopathy', 'personal', 'family'].forEach(cat => {
+                const income = categoryData[cat].income;
+                const expense = categoryData[cat].expense;
+                const difference = income - expense;
+
+                document.getElementById(`${cat}Income`).textContent = formatCurrency(income);
+                document.getElementById(`${cat}Expense`).textContent = formatCurrency(expense);
+                const diffElement = document.getElementById(`${cat}Difference`);
+                diffElement.textContent = formatCurrency(difference);
+
+                // Apply color based on difference
+                diffElement.classList.remove('positive-balance', 'negative-balance');
+                if (difference > 0) {
+                    diffElement.classList.add('positive-balance');
+                } else if (difference < 0) {
+                    diffElement.classList.add('negative-balance');
+                }
+
+                renderTransactionList(categoryData[cat].transactions, document.getElementById(`${cat}Transactions`));
+            });
+
+            // Render Cosmetology tab
+            const cosmetologyIncome = categoryData.cosmetology.income;
+            const cosmetologyExpense = categoryData.cosmetology.expense;
+            const panktiShare = cosmetologyIncome * 0.50;
+            const jenishShare = cosmetologyIncome * 0.50;
+            const cosmetologyNetIncome = panktiShare - cosmetologyExpense; // Net income for Pankti after her share and clinic expenses
+
+            document.getElementById('cosmetologyIncome').textContent = formatCurrency(cosmetologyIncome);
+
+            const cosmetologyExpenseSection = document.getElementById('cosmetologyExpenseSection');
+            if (cosmetologyExpense > 0) {
+                document.getElementById('cosmetologyExpense').textContent = formatCurrency(cosmetologyExpense);
+                cosmetologyExpenseSection.classList.remove('hidden');
+            } else {
+                cosmetologyExpenseSection.classList.add('hidden');
+            }
+
+            document.getElementById('panktiShare').textContent = formatCurrency(panktiShare);
+            document.getElementById('jenishShare').textContent = formatCurrency(jenishShare);
+            const cosmetologyNetIncomeElement = document.getElementById('cosmetologyNetIncome');
+            cosmetologyNetIncomeElement.textContent = formatCurrency(cosmetologyNetIncome);
+
+            // Apply color based on net income for Cosmetology
+            cosmetologyNetIncomeElement.classList.remove('positive-balance', 'negative-balance');
+            if (cosmetologyNetIncome > 0) {
+                cosmetologyNetIncomeElement.classList.add('positive-balance');
+            } else if (cosmetologyNetIncome < 0) {
+                cosmetologyNetIncomeElement.classList.add('negative-balance');
+            }
+
+            renderTransactionList(categoryData.cosmetology.transactions, document.getElementById('cosmetologyTransactions'));
+        }
+
+        // Function to render transaction list for a given category
+        function renderTransactionList(transactions, containerElement) {
+            containerElement.innerHTML = ''; // Clear previous list
+
+            if (transactions.length === 0) {
+                containerElement.innerHTML = '<p class="text-gray-500 text-center py-4">No transactions yet.</p>';
+                return;
+            }
+
+            const ul = document.createElement('ul');
+            ul.className = 'divide-y divide-gray-200';
+
+            // Sort transactions by timestamp in descending order (newest first)
+            const sortedTransactions = [...transactions].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+            sortedTransactions.forEach(t => {
+                const li = document.createElement('li');
+                li.className = 'py-2 px-3 flex justify-between items-center text-sm';
+                li.innerHTML = `
+                    <div>
+                        <p class="font-medium text-gray-800">${t.details}</p>
+                        <p class="text-gray-500 text-xs">${new Date(t.timestamp).toLocaleDateString()} ${new Date(t.timestamp).toLocaleTimeString()}</p>
+                    </div>
+                    <span class="${t.type === 'income' ? 'text-green-600' : 'text-red-600'} font-semibold">
+                        ${t.type === 'income' ? '+' : '-'} ${formatCurrency(t.amount)}
+                    </span>
+                `;
+                ul.appendChild(li);
+            });
+            containerElement.appendChild(ul);
+        }
+
+
+        // Function to handle tab switching
+        function switchTab(selectedTabId) {
+            tabButtons.forEach(button => {
+                if (button.dataset.tab === selectedTabId) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+
+            tabPanes.forEach(pane => {
+                if (pane.id === selectedTabId) {
+                    pane.classList.remove('hidden');
+                } else {
+                    pane.classList.add('hidden');
+                }
+            });
+        }
+
+        // Function to download data as CSV
+        function downloadCSV() {
+            if (transactions.length === 0) {
+                alert('No data to download.');
+                return;
+            }
+
+            // Recalculate category data for CSV export
+            const categoryData = {
+                homoeopathy: { income: 0, expense: 0 },
+                cosmetology: { income: 0, expense: 0 },
+                personal: { income: 0, expense: 0 },
+                family: { income: 0, expense: 0 }
+            };
+
+            transactions.forEach(t => {
+                if (categoryData[t.category]) {
+                    if (t.type === 'income') {
+                        categoryData[t.category].income += t.amount;
+                    } else {
+                        categoryData[t.category].expense += t.amount;
+                    }
+                }
+            });
+
+            let overallIncome = 0;
+            let overallExpense = 0;
+
+            for (const cat in categoryData) {
+                if (cat === 'cosmetology') {
+                    const cosmetologyIncome = categoryData.cosmetology.income;
+                    const cosmetologyExpense = categoryData.cosmetology.expense;
+                    const panktiShare = cosmetologyIncome * 0.50;
+                    const cosmetologyNetIncome = panktiShare - cosmetologyExpense;
+
+                    if (cosmetologyNetIncome > 0) {
+                        overallIncome += cosmetologyNetIncome;
+                    } else {
+                        overallExpense += Math.abs(cosmetologyNetIncome);
+                    }
+                } else {
+                    overallIncome += categoryData[cat].income;
+                    overallExpense += categoryData[cat].expense;
+                }
+            }
+
+            // CSV Header
+            const headers = ["Timestamp", "Category", "Type", "Details", "Amount (INR)"];
+            let csvContent = "Overall Summary:\n";
+            csvContent += `Total Income (Adjusted),${overallIncome.toFixed(2)}\n`;
+            csvContent += `Total Expense (Adjusted),${overallExpense.toFixed(2)}\n`;
+            csvContent += `Overall Net Balance,${(overallIncome - overallExpense).toFixed(2)}\n\n`;
+
+            csvContent += headers.join(",") + "\n";
+
+            // CSV Rows
+            transactions.forEach(t => {
+                const row = [
+                    `"${t.timestamp}"`, // Wrap timestamp in quotes to handle commas if any
+                    `"${t.category}"`,
+                    `"${t.type}"`,
+                    `"${t.details.replace(/"/g, '""')}"`, // Escape double quotes in details
+                    t.amount.toFixed(2)
+                ];
+                csvContent += row.join(",") + "\n";
+            });
+
+            // Create a Blob and download
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'DrPankti_Finance_Tracker.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Event Listeners
+        addTransactionBtn.addEventListener('click', addTransaction);
+        downloadCsvBtn.addEventListener('click', downloadCSV);
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                switchTab(button.dataset.tab);
+            });
+        });
+
+        // Initial load and render
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTransactions();
+            renderDashboard();
+            // Activate the first tab by default (now 'all')
+            switchTab('all');
+        });
+
+    </script>
+</body>
+</html>
