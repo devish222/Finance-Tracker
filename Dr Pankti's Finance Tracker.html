@@ -61,6 +61,11 @@
             text-align: center;
         }
 
+        /* New style for selected transaction items */
+        .selected-transaction-item {
+            background-color: #DBEAFE; /* Blue 100 */
+        }
+
         /* Responsive adjustments for smaller screens */
         @media (max-width: 639px) { /* Tailwind's 'sm' breakpoint is 640px */
             .tab-button {
@@ -151,11 +156,11 @@
 
             <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <button id="saveTransactionBtn"
-                        class="w-full sm:w-1/2 bg-emerald-600 text-white p-2 sm:p-3 rounded-md font-semibold text-base sm:text-lg hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300 transition duration-300 ease-in-out transform hover:scale-105">
+                        class="w-full sm:w-1/2 bg-emerald-600 text-white p-2 sm:p-3 rounded-md font-semibold text-base sm:text-lg focus:outline-none focus:ring-4 focus:ring-emerald-300 transition duration-300 ease-in-out">
                     Add Transaction
                 </button>
                 <button id="cancelEditBtn"
-                        class="w-full sm:w-1/2 bg-gray-400 text-white p-2 sm:p-3 rounded-md font-semibold text-base sm:text-lg hover:bg-gray-500 focus:outline-none focus:ring-4 focus:ring-gray-300 transition duration-300 ease-in-out transform hover:scale-105 hidden">
+                        class="w-full sm:w-1/2 bg-gray-400 text-white p-2 sm:p-3 rounded-md font-semibold text-base sm:text-lg focus:outline-none focus:ring-4 focus:ring-gray-300 transition duration-300 ease-in-out hidden">
                     Cancel Edit
                 </button>
             </div>
@@ -163,11 +168,11 @@
 
         <!-- Tabs Navigation -->
         <nav class="flex flex-wrap justify-center gap-1 sm:gap-4 bg-gray-50 p-2 sm:p-3 rounded-lg shadow-inner">
-            <button class="tab-button active px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-medium text-gray-700 text-sm sm:text-base hover:bg-emerald-100 transition duration-200" data-tab="all">All Transactions</button>
-            <button class="tab-button px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-medium text-gray-700 text-sm sm:text-base hover:bg-emerald-100 transition duration-200" data-tab="homoeopathy">Homoeopathy Clinic</button>
-            <button class="tab-button px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-medium text-gray-700 text-sm sm:text-base hover:bg-emerald-100 transition duration-200" data-tab="cosmetology">Cosmetology Clinic</button>
-            <button class="tab-button px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-medium text-gray-700 text-sm sm:text-base hover:bg-emerald-100 transition duration-200" data-tab="personal">Personal</button>
-            <button class="tab-button px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-medium text-gray-700 text-sm sm:text-base hover:bg-emerald-100 transition duration-200" data-tab="family">Family</button>
+            <button class="tab-button active px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-medium text-gray-700 text-sm sm:text-base transition duration-200" data-tab="all">All Transactions</button>
+            <button class="tab-button px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-medium text-gray-700 text-sm sm:text-base transition duration-200" data-tab="homoeopathy">Homoeopathy Clinic</button>
+            <button class="tab-button px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-medium text-gray-700 text-sm sm:text-base transition duration-200" data-tab="cosmetology">Cosmetology Clinic</button>
+            <button class="tab-button px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-medium text-gray-700 text-sm sm:text-base transition duration-200" data-tab="personal">Personal</button>
+            <button class="tab-button px-3 py-1 sm:px-4 sm:py-2 rounded-lg font-medium text-gray-700 text-sm sm:text-base transition duration-200" data-tab="family">Family</button>
         </nav>
 
         <!-- Tab Content Areas -->
@@ -190,6 +195,12 @@
                     </div>
                 </div>
                 <h3 class="text-lg sm:text-xl font-semibold text-gray-700 mb-2 sm:mb-3">All Transactions</h3>
+                <!-- Action buttons for All Transactions tab -->
+                <div class="flex justify-end gap-2 mb-3">
+                    <button id="allEditSelectedBtn" class="action-btn bg-blue-500 text-white px-3 py-1 rounded-md text-sm transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Edit Selected</button>
+                    <button id="allDeleteSelectedBtn" class="action-btn bg-red-500 text-white px-3 py-1 rounded-md text-sm transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Delete Selected</button>
+                    <button id="allClearSelectionBtn" class="action-btn bg-gray-300 text-gray-800 px-3 py-1 rounded-md text-sm transition duration-200 hidden">Clear Selection</button>
+                </div>
                 <div id="allTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-2 sm:p-3 bg-white">
                     <p class="text-gray-500 text-center text-sm py-4">No transactions yet.</p>
                 </div>
@@ -213,6 +224,12 @@
                     </div>
                 </div>
                 <h3 class="text-lg sm:text-xl font-semibold text-gray-700 mb-2 sm:mb-3">Transactions</h3>
+                <!-- Action buttons for Homoeopathy tab -->
+                <div class="flex justify-end gap-2 mb-3">
+                    <button id="homoeopathyEditSelectedBtn" class="action-btn bg-blue-500 text-white px-3 py-1 rounded-md text-sm transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Edit Selected</button>
+                    <button id="homoeopathyDeleteSelectedBtn" class="action-btn bg-red-500 text-white px-3 py-1 rounded-md text-sm transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Delete Selected</button>
+                    <button id="homoeopathyClearSelectionBtn" class="action-btn bg-gray-300 text-gray-800 px-3 py-1 rounded-md text-sm transition duration-200 hidden">Clear Selection</button>
+                </div>
                 <div id="homoeopathyTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-2 sm:p-3 bg-white">
                     <p class="text-gray-500 text-center text-sm py-4">No transactions yet.</p>
                 </div>
@@ -245,6 +262,12 @@
                     </div>
                 </div>
                 <h3 class="text-lg sm:text-xl font-semibold text-gray-700 mb-2 sm:mb-3">Transactions</h3>
+                <!-- Action buttons for Cosmetology tab -->
+                <div class="flex justify-end gap-2 mb-3">
+                    <button id="cosmetologyEditSelectedBtn" class="action-btn bg-blue-500 text-white px-3 py-1 rounded-md text-sm transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Edit Selected</button>
+                    <button id="cosmetologyDeleteSelectedBtn" class="action-btn bg-red-500 text-white px-3 py-1 rounded-md text-sm transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Delete Selected</button>
+                    <button id="cosmetologyClearSelectionBtn" class="action-btn bg-gray-300 text-gray-800 px-3 py-1 rounded-md text-sm transition duration-200 hidden">Clear Selection</button>
+                </div>
                 <div id="cosmetologyTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-2 sm:p-3 bg-white">
                     <p class="text-gray-500 text-center text-sm py-4">No transactions yet.</p>
                 </div>
@@ -268,6 +291,12 @@
                     </div>
                 </div>
                 <h3 class="text-lg sm:text-xl font-semibold text-gray-700 mb-2 sm:mb-3">Transactions</h3>
+                <!-- Action buttons for Personal tab -->
+                <div class="flex justify-end gap-2 mb-3">
+                    <button id="personalEditSelectedBtn" class="action-btn bg-blue-500 text-white px-3 py-1 rounded-md text-sm transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Edit Selected</button>
+                    <button id="personalDeleteSelectedBtn" class="action-btn bg-red-500 text-white px-3 py-1 rounded-md text-sm transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Delete Selected</button>
+                    <button id="personalClearSelectionBtn" class="action-btn bg-gray-300 text-gray-800 px-3 py-1 rounded-md text-sm transition duration-200 hidden">Clear Selection</button>
+                </div>
                 <div id="personalTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-2 sm:p-3 bg-white">
                     <p class="text-gray-500 text-center text-sm py-4">No transactions yet.</p>
                 </div>
@@ -291,6 +320,12 @@
                     </div>
                 </div>
                 <h3 class="text-lg sm:text-xl font-semibold text-gray-700 mb-2 sm:mb-3">Transactions</h3>
+                <!-- Action buttons for Family tab -->
+                <div class="flex justify-end gap-2 mb-3">
+                    <button id="familyEditSelectedBtn" class="action-btn bg-blue-500 text-white px-3 py-1 rounded-md text-sm transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Edit Selected</button>
+                    <button id="familyDeleteSelectedBtn" class="action-btn bg-red-500 text-white px-3 py-1 rounded-md text-sm transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled>Delete Selected</button>
+                    <button id="familyClearSelectionBtn" class="action-btn bg-gray-300 text-gray-800 px-3 py-1 rounded-md text-sm transition duration-200 hidden">Clear Selection</button>
+                </div>
                 <div id="familyTransactions" class="transaction-list-container max-h-64 overflow-y-auto border border-gray-200 rounded-md p-2 sm:p-3 bg-white">
                     <p class="text-gray-500 text-center text-sm py-4">No transactions yet.</p>
                 </div>
@@ -300,7 +335,7 @@
         <!-- Download CSV Button -->
         <section class="text-center mt-6 sm:mt-8">
             <button id="downloadCsvBtn"
-                    class="bg-gray-700 text-white p-2 sm:p-3 rounded-md font-semibold text-base sm:text-lg hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 transition duration-300 ease-in-out transform hover:scale-105">
+                    class="bg-gray-700 text-white p-2 sm:p-3 rounded-md font-semibold text-base sm:text-lg focus:outline-none focus:ring-4 focus:ring-gray-300 transition duration-300 ease-in-out">
                 Download All Data (CSV)
             </button>
         </section>
@@ -312,8 +347,8 @@
         <div class="modal-content">
             <p id="modalMessage" class="text-base sm:text-lg text-gray-800 mb-4 sm:mb-6"></p>
             <div id="modalButtons" class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-                <button id="modalConfirmBtn" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-200 hidden text-sm sm:text-base">Confirm</button>
-                <button id="modalCancelBtn" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 transition duration-200 text-sm sm:text-base">OK</button>
+                <button id="modalConfirmBtn" class="bg-red-600 text-white px-4 py-2 rounded-md transition duration-200 hidden text-sm sm:text-base">Confirm</button>
+                <button id="modalCancelBtn" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-md transition duration-200 text-sm sm:text-base">OK</button>
             </div>
         </div>
     </div>
@@ -322,13 +357,14 @@
         // Array to store all transactions
         let transactions = [];
         let editingTransactionId = null; // To store the ID of the transaction being edited
+        let selectedTransactionIds = new Set(); // To store IDs of selected transactions
 
         // DOM Elements
         const detailsInput = document.getElementById('details');
         const amountInput = document.getElementById('amount');
         const typeSelect = document.getElementById('type');
         const categorySelect = document.getElementById('category');
-        const saveTransactionBtn = document.getElementById('saveTransactionBtn'); // Renamed from addTransactionBtn
+        const saveTransactionBtn = document.getElementById('saveTransactionBtn');
         const cancelEditBtn = document.getElementById('cancelEditBtn');
         const downloadCsvBtn = document.getElementById('downloadCsvBtn');
 
@@ -341,6 +377,9 @@
         const modalConfirmBtn = document.getElementById('modalConfirmBtn');
         const modalCancelBtn = document.getElementById('modalCancelBtn');
 
+        // Current active tab (used to update action buttons for the correct tab)
+        let activeTabCategory = 'all';
+
         // Function to show custom modal
         function showModal(message, isConfirm = false, onConfirm = null) {
             modalMessage.textContent = message;
@@ -351,8 +390,7 @@
                     hideModal();
                     if (onConfirm) onConfirm();
                 };
-                // Explicitly set cancel button to just hide the modal for confirm dialogs
-                modalCancelBtn.onclick = hideModal;
+                modalCancelBtn.onclick = hideModal; // Ensure cancel hides modal without action
             } else {
                 modalConfirmBtn.classList.add('hidden');
                 modalCancelBtn.textContent = 'OK';
@@ -367,7 +405,6 @@
             modalConfirmBtn.onclick = null;
             modalCancelBtn.onclick = null;
         }
-
 
         // Function to format currency to INR
         function formatCurrency(amount) {
@@ -426,6 +463,7 @@
             }
 
             saveTransactions(); // Save to localStorage
+            selectedTransactionIds.clear(); // Clear selection after add/update
             renderDashboard(); // Update the dashboard UI
 
             // Clear input fields
@@ -461,20 +499,62 @@
             cancelEditBtn.classList.add('hidden');
         }
 
-        // Function to delete a transaction
-        function deleteTransaction(id) {
-            showModal('Are you sure you want to delete this transaction?', true, () => {
-                transactions = transactions.filter(t => t.id !== id);
+        // Function to delete transactions (can handle single or multiple)
+        function deleteTransactions(idsToDelete) {
+            if (idsToDelete.length === 0) {
+                showModal('No transactions selected for deletion.');
+                return;
+            }
+
+            const message = idsToDelete.length === 1
+                ? 'Are you sure you want to delete this transaction?'
+                : `Are you sure you want to delete ${idsToDelete.length} selected transactions?`;
+
+            showModal(message, true, () => {
+                transactions = transactions.filter(t => !idsToDelete.includes(t.id));
                 saveTransactions();
+                selectedTransactionIds.clear(); // Clear selection after deletion
                 renderDashboard();
-                showModal('Transaction deleted successfully!');
+                showModal('Transaction(s) deleted successfully!');
             });
+        }
+
+        // Function to update the state of action buttons (Edit Selected, Delete Selected, Clear Selection)
+        function updateActionButtonsState(category) {
+            const editBtn = document.getElementById(`${category}EditSelectedBtn`);
+            const deleteBtn = document.getElementById(`${category}DeleteSelectedBtn`);
+            const clearBtn = document.getElementById(`${category}ClearSelectionBtn`);
+
+            if (!editBtn || !deleteBtn || !clearBtn) return; // Exit if buttons don't exist for this category
+
+            const selectedCount = selectedTransactionIds.size;
+
+            // Enable/disable Edit Selected button
+            if (selectedCount === 1) {
+                editBtn.disabled = false;
+                editBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                editBtn.disabled = true;
+                editBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+
+            // Enable/disable Delete Selected button
+            if (selectedCount >= 1) {
+                deleteBtn.disabled = false;
+                deleteBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                clearBtn.classList.remove('hidden'); // Show clear button if anything is selected
+            } else {
+                deleteBtn.disabled = true;
+                deleteBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                clearBtn.classList.add('hidden'); // Hide clear button if nothing is selected
+            }
         }
 
         // Function to render the dashboard based on current transactions
         function renderDashboard() {
             // Initialize sums for each category
             const categoryData = {
+                all: { income: 0, expense: 0, transactions: [] }, // For the 'All Transactions' tab
                 homoeopathy: { income: 0, expense: 0, transactions: [] },
                 cosmetology: { income: 0, expense: 0, transactions: [] },
                 personal: { income: 0, expense: 0, transactions: [] },
@@ -483,6 +563,7 @@
 
             // Aggregate data for individual categories first
             transactions.forEach(t => {
+                // Add to specific category
                 if (categoryData[t.category]) {
                     if (t.type === 'income') {
                         categoryData[t.category].income += t.amount;
@@ -491,6 +572,8 @@
                     }
                     categoryData[t.category].transactions.push(t);
                 }
+                // Add to 'all' category for overall summary
+                categoryData.all.transactions.push(t);
             });
 
             let overallIncome = 0;
@@ -498,6 +581,8 @@
 
             // Calculate overall income and expense considering Cosmetology net income
             for (const cat in categoryData) {
+                if (cat === 'all') continue; // Skip 'all' for this specific calculation loop
+
                 if (cat === 'cosmetology') {
                     const cosmetologyIncome = categoryData.cosmetology.income;
                     const cosmetologyExpense = categoryData.cosmetology.expense;
@@ -527,7 +612,7 @@
             } else if (overallDifference < 0) {
                 overallDiffElement.classList.add('negative-balance');
             }
-            renderTransactionList(transactions, document.getElementById('allTransactions')); // Display all transactions
+            renderTransactionList(categoryData.all.transactions, document.getElementById('allTransactions'), 'all'); // Display all transactions
 
             // Render Homoeopathy, Personal, Family tabs
             ['homoeopathy', 'personal', 'family'].forEach(cat => {
@@ -548,7 +633,7 @@
                     diffElement.classList.add('negative-balance');
                 }
 
-                renderTransactionList(categoryData[cat].transactions, document.getElementById(`${cat}Transactions`));
+                renderTransactionList(categoryData[cat].transactions, document.getElementById(`${cat}Transactions`), cat);
             });
 
             // Render Cosmetology tab
@@ -581,11 +666,14 @@
                 cosmetologyNetIncomeElement.classList.add('negative-balance');
             }
 
-            renderTransactionList(categoryData.cosmetology.transactions, document.getElementById('cosmetologyTransactions'));
+            renderTransactionList(categoryData.cosmetology.transactions, document.getElementById('cosmetologyTransactions'), 'cosmetology');
+
+            // Update action buttons for the currently active tab
+            updateActionButtonsState(activeTabCategory);
         }
 
         // Function to render transaction list for a given category
-        function renderTransactionList(transactions, containerElement) {
+        function renderTransactionList(transactions, containerElement, category) {
             containerElement.innerHTML = ''; // Clear previous list
 
             if (transactions.length === 0) {
@@ -601,34 +689,41 @@
 
             sortedTransactions.forEach(t => {
                 const li = document.createElement('li');
-                li.className = 'py-2 px-3 flex justify-between items-center text-sm';
+                // Dynamically add 'selected-transaction-item' class if selected
+                li.className = `py-2 px-3 flex items-center text-sm ${selectedTransactionIds.has(t.id) ? 'selected-transaction-item' : ''}`;
+
                 li.innerHTML = `
-                    <div class="flex-grow">
-                        <p class="font-medium text-gray-800">${t.details}</p>
-                        <p class="text-gray-500 text-xs">${new Date(t.timestamp).toLocaleDateString()} ${new Date(t.timestamp).toLocaleTimeString()}</p>
-                        <p class="text-gray-500 text-xs capitalize">Category: ${t.category}</p>
-                    </div>
-                    <div class="flex items-center gap-2">
+                    <input type="checkbox" class="transaction-checkbox mr-2 h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded" data-id="${t.id}" data-category="${category}" ${selectedTransactionIds.has(t.id) ? 'checked' : ''}>
+                    <div class="flex-grow flex justify-between items-center">
+                        <div>
+                            <p class="font-medium text-gray-800">${t.details}</p>
+                            <p class="text-gray-500 text-xs">${new Date(t.timestamp).toLocaleDateString()} ${new Date(t.timestamp).toLocaleTimeString()}</p>
+                            <p class="text-gray-500 text-xs capitalize">Category: ${t.category}</p>
+                        </div>
                         <span class="${t.type === 'income' ? 'text-green-600' : 'text-red-600'} font-semibold">
                             ${t.type === 'income' ? '+' : '-'} ${formatCurrency(t.amount)}
                         </span>
-                        <button class="edit-btn bg-blue-500 text-white px-2 py-1 rounded-md text-xs hover:bg-blue-600 transition duration-200" data-id="${t.id}">Edit</button>
-                        <button class="delete-btn bg-red-500 text-white px-2 py-1 rounded-md text-xs hover:bg-red-600 transition duration-200" data-id="${t.id}">Delete</button>
                     </div>
                 `;
                 ul.appendChild(li);
             });
             containerElement.appendChild(ul);
 
-            // Add event listeners for edit and delete buttons
-            containerElement.querySelectorAll('.edit-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    editTransaction(parseInt(event.target.dataset.id));
-                });
-            });
-            containerElement.querySelectorAll('.delete-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    deleteTransaction(parseInt(event.target.dataset.id));
+            // Add event listeners for checkboxes
+            containerElement.querySelectorAll('.transaction-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', (event) => {
+                    const id = parseInt(event.target.dataset.id);
+                    const categoryOfCheckbox = event.target.dataset.category;
+                    const listItem = event.target.closest('li'); // Get the parent li element
+
+                    if (event.target.checked) {
+                        selectedTransactionIds.add(id);
+                        if (listItem) listItem.classList.add('selected-transaction-item');
+                    } else {
+                        selectedTransactionIds.delete(id);
+                        if (listItem) listItem.classList.remove('selected-transaction-item');
+                    }
+                    updateActionButtonsState(categoryOfCheckbox);
                 });
             });
         }
@@ -651,6 +746,10 @@
                     pane.classList.add('hidden');
                 }
             });
+
+            activeTabCategory = selectedTabId; // Update active tab
+            selectedTransactionIds.clear(); // Clear selection when changing tabs
+            renderDashboard(); // Re-render to reflect cleared selection and update buttons
         }
 
         // Function to download data as CSV
@@ -742,6 +841,37 @@
                 switchTab(button.dataset.tab);
             });
         });
+
+        // Event listeners for the new action buttons within each tab
+        document.addEventListener('click', (event) => {
+            if (event.target.id.endsWith('EditSelectedBtn')) {
+                const category = event.target.id.replace('EditSelectedBtn', '');
+                if (selectedTransactionIds.size === 1) {
+                    editTransaction(selectedTransactionIds.values().next().value);
+                    selectedTransactionIds.clear(); // Clear selection after initiating edit
+                    updateActionButtonsState(category);
+                } else {
+                    showModal('Please select exactly one transaction to edit.');
+                }
+            } else if (event.target.id.endsWith('DeleteSelectedBtn')) {
+                const category = event.target.id.replace('DeleteSelectedBtn', '');
+                if (selectedTransactionIds.size > 0) {
+                    deleteTransactions(Array.from(selectedTransactionIds));
+                    // Deletion clears selection, renderDashboard will update buttons
+                } else {
+                    showModal('Please select at least one transaction to delete.');
+                }
+            } else if (event.target.id.endsWith('ClearSelectionBtn')) {
+                const category = event.target.id.replace('ClearSelectionBtn', '');
+                selectedTransactionIds.clear();
+                // Uncheck all checkboxes visually
+                document.querySelectorAll(`#${category}Transactions .transaction-checkbox`).forEach(cb => {
+                    cb.checked = false;
+                });
+                updateActionButtonsState(category);
+            }
+        });
+
 
         // Initial load and render
         document.addEventListener('DOMContentLoaded', () => {
